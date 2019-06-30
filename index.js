@@ -11,14 +11,17 @@ function watchForm(){
     getNationalParks(searchTerm, maxResults);
     });
 }
-
+function createUrl(searchTerm,maxResults){
+  const baseurl = 'https://developer.nps.gov/api/v1/parks';
+  const userState = 'stateCode='+ searchTerm;
+  const resultsQty = 'limit=' + maxResults;
+  const url = baseurl + '?' + userState + '&' + resultsQty+ '&' + apiKey;
+  return url;
+}
 function getNationalParks(searchTerm,maxResults){
     $('#js-searchParks').empty();
-    const baseurl = 'https://developer.nps.gov/api/v1/parks';
-    const userState = 'stateCode='+ searchTerm;
-    const resultsQty = 'limit=' + maxResults;
-    const url = baseurl + '?' + userState + '&' + resultsQty+ '&' + apiKey; 
-      console.log(url);
+      // console.log(url);
+      const url = createUrl(searchTerm,maxResults);
       fetch(url)
       .then(response => {
         if (response.ok) {
